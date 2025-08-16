@@ -45,6 +45,7 @@ smallvec = { workspace = true, optional = true }
 spl-token-2022 = { workspace = true, optional = true }
 thiserror = { workspace = true, optional = true }
 tonic = { workspace = true, optional = true }
+tonic-prost = { workspace = true, optional = true }
 
 [dev-dependencies]
 criterion = { workspace = true }
@@ -55,6 +56,7 @@ solana-storage-proto = { workspace = true }
 anyhow = { workspace = true }
 protobuf-src = { workspace = true }
 tonic-build = { workspace = true }
+tonic-prost-build = { workspace = true }
 
 [features]
 default = ["convert", "tonic", "tonic-compression"]
@@ -87,7 +89,7 @@ plugin = [
   "dep:tonic",
 ]
 plugin-bench = ["plugin", "dep:prost_011", "dep:solana-storage-proto"]
-tonic = ["dep:tonic"]
+tonic = ["dep:tonic", "dep:tonic-prost"]
 tonic-compression = ["tonic", "tonic/gzip", "tonic/zstd"]
 
 [lints]
