@@ -57,7 +57,13 @@ impl Plugin {
 
 impl GeyserPlugin for Plugin {
     fn name(&self) -> &'static str {
-        concat!(env!("CARGO_PKG_NAME"),"-", "zero", "-", env!("CARGO_PKG_VERSION"))
+        concat!(
+            env!("CARGO_PKG_NAME"),
+            "-",
+            "zero",
+            "-",
+            env!("CARGO_PKG_VERSION")
+        )
     }
 
     fn on_load(&mut self, config_file: &str, is_reload: bool) -> PluginResult<()> {
@@ -202,15 +208,11 @@ impl GeyserPlugin for Plugin {
                 ReplicaTransactionInfoVersions::V0_0_1(_info) => {
                     unreachable!("ReplicaAccountInfoVersions::V0_0_1 is not supported")
                 }
-                ReplicaTransactionInfoVersions::V0_0_2(info) => info,
+                ReplicaTransactionInfoVersions::V0_0_2(_info) => {
+                    unreachable!("ReplicaAccountInfoVersions::V0_0_2 is not supported")
+                }
+                ReplicaTransactionInfoVersions::V0_0_3(info) => info,
             };
-
-            if transaction.is_vote {
-                return Ok(());
-            }
-            if transaction.transaction_status_meta.status.is_err() {
-                return Ok(());
-            }
 
             let message = Message::Transaction(MessageTransaction::from_geyser(transaction, slot));
             inner.send_message(message);
