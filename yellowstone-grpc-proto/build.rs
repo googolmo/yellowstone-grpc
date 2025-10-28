@@ -4,7 +4,7 @@ use {
 };
 
 fn main() -> anyhow::Result<()> {
-    std::env::set_var("PROTOC", protobuf_src::protoc());
+    // std::env::set_var("PROTOC", protobuf_src::protoc());
 
     // build protos
     tonic_prost_build::configure().compile_protos(&["proto/geyser.proto"], &["proto"])?;
@@ -28,7 +28,6 @@ fn main() -> anyhow::Result<()> {
                 .name("subscribe")
                 .route_name("Subscribe")
                 .input_type("crate::geyser::SubscribeRequest")
-                // .output_type("crate::geyser::SubscribeUpdate")
                 .output_type("crate::plugin::filter::message::FilteredUpdate")
                 .codec_path("tonic_prost::ProstCodec")
                 .client_streaming()
@@ -42,7 +41,6 @@ fn main() -> anyhow::Result<()> {
                 .input_type("crate::geyser::SubscribeAccountRequest")
                 .output_type("crate::geyser::SubscribeAccountUpdate")
                 .codec_path("tonic_prost::ProstCodec")
-                // .codec_path("crate::plugin::codec::SubscribeCodec")
                 .client_streaming()
                 .server_streaming()
                 .build(),
